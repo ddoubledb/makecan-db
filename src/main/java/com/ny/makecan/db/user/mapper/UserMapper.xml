@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ny.makecan.db.user.mapper.UserMapper">
+
+	<resultMap type="com.ny.makecan.db.user.model.UserModel" id="UserResultMap">
+		<id column="userId" jdbcType="VARCHAR" property="userId" />
+		<id column="password" jdbcType="VARCHAR" property="password" />
+		<id column="name" jdbcType="VARCHAR" property="name" />
+		<id column="regDt" jdbcType="CHAR" property="regDt" />
+	</resultMap>
+
+	<select id="selectByUserId" resultMap="UserResultMap">
+		SELECT
+			userId, password, name, regDt
+		FROM MC_USER
+		WHERE userId = #{userId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectList">
+		SELECT
+			userId, password, name, regDt
+		FROM MC_USER		
+	</select>
+	
+	<insert id="insert">
+    INSERT INTO MC_USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="regDt != null">
+        regDt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="regDt != null">
+        #{regDt,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update">
+    UPDATE MC_USER
+    <set>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="regDt != null">
+        regDt = #{regDt,jdbcType=CHAR},
+      </if>
+    </set>
+    WHERE userId = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByUserId">
+    DELETE FROM MC_USER
+    WHERE userId = #{userId,jdbcType=VARCHAR}
+  </delete>
+	
+
+</mapper>
